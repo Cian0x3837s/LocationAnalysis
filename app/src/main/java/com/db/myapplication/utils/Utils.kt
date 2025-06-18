@@ -62,15 +62,13 @@ object Utils {
         val dwellDurationPerVenue = mutableMapOf<String, Double>()
 
         for (pth in session.path) {
-            for (venue in venueList) {
-                val distance = distanceCalculator(pth.position, venue.position)
+            val matchedVenue = venueList.firstOrNull { venue ->
+                distanceCalculator(pth.position, venue.position) <= threshold
+            }
 
-                if (distance <= threshold) {
-                    Log.e("Utils","Distance from ${pth.position} to ${venue.position} = $distance")
-                    dwellDurationPerVenue[venue.id] =
-                        dwellDurationPerVenue.getOrDefault(venue.id, 0.0) + 1.0
-                    break
-                }
+            matchedVenue?.let { venue ->
+                dwellDurationPerVenue[venue.id] =
+                    dwellDurationPerVenue.getOrDefault(venue.id, 0.0) + 1.0
             }
         }
 
