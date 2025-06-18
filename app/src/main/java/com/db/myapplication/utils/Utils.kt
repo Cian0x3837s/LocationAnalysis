@@ -1,6 +1,7 @@
 package com.db.myapplication.utils
 
 import android.content.Context
+import android.util.Log
 import com.db.myapplication.model.Coordinate
 import com.db.myapplication.model.DwellTimeResult
 import com.db.myapplication.model.UserDwellTime
@@ -65,6 +66,7 @@ object Utils {
                 val distance = distanceCalculator(pth.position, venue.position)
 
                 if (distance <= threshold) {
+                    Log.e("Utils","Distance from ${pth.position} to ${venue.position} = $distance")
                     dwellDurationPerVenue[venue.id] =
                         dwellDurationPerVenue.getOrDefault(venue.id, 0.0) + 1.0
                     break
